@@ -1,0 +1,43 @@
+{
+  "name": "grunt-radic",
+  "version": "0.0.1",
+  "description": "My tasks",
+  "main": "lib/index.js",
+  "files": [
+    "tasks",
+    "lib",
+    "LICENSE-MIT",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://robinradic@github.com/robinradic/grunt-radic"
+  },
+  "bugs": {
+    "url": "https://github.com/robinradic/grunt-radic/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://radic.mit-license.org"
+    }
+  ],
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "async": "0.9.0",
+    "fs-extra": "0.12.0",
+    "handlebars": "2.0.0",
+    "istanbul": "0.3.5",
+    "js-yaml": "^3.2.5",
+    "lodash": "2.4.1",
+    "mocha": "2.1.0",
+    "radic": "^0.2.1"
+  },
+  "author": {
+    "name": "Robin Radic",
+    "email": "robin@radic.nl"
+  }
+}
