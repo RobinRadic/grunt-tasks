@@ -38,7 +38,7 @@
     });
 ?>
 
-<table class="params">
+<table class="table table-striped table-bordered table-advance table-hover table-condensed table-params">
     <thead>
     <tr>
         <?js if (params.hasName) {?>
@@ -68,7 +68,11 @@
 
         <tr>
             <?js if (params.hasName) {?>
-                <td class="name"><code><?js= param.name ?></code></td>
+                <td class="name">
+                    <code class="<?js= (param.optional || param.hasDefault) ? 'font-red-pink' : 'font-red-thunderbird' ?>">
+                    <?js= param.name ?>
+                    </code>
+                </td>
             <?js } ?>
 
             <td class="type">

@@ -34,7 +34,7 @@ module.exports = function (grunt) {
         }
 
         var msg = Date(Date.now());
-
+        var ok = grunt.log.ok;
         var options = this.options({
             dir: 'docs',
             indexName: 'index.md',
@@ -64,6 +64,7 @@ module.exports = function (grunt) {
                     .replace(/```\n/g, '{% endhighlight %}\n');
 
                 fs.outputFileSync(path.join(cwd, options.dir, options.indexName), readme, 'utf-8');
+                ok('created index.md');
                 process.chdir(path.join(cwd, options.dir));
                 next(null);
             },
@@ -73,6 +74,7 @@ module.exports = function (grunt) {
             }),
             ascmd('git push -u origin gh-pages'),
             function(next){
+                ok('commited and pushed gh-pages');
                 chdirReset();
                 next();
             }

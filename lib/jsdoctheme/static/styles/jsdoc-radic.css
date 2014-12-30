@@ -1,3 +1,17 @@
+.table-params tr td,
+.table-params tr th {
+	vertical-align: middle !important;
+}
+
+
+
+hr.hr-top-margin {
+	margin: 30px 0 0 0 !important;
+}
+
+
+
+
 
 .ancestors { color: #999; }
 .ancestors a

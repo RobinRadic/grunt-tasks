@@ -20,24 +20,31 @@
 <section>
 
 <header>
-    <?js if (!doc.longname || doc.kind !== 'module') { ?>
-        <h2><?js if (doc.ancestors && doc.ancestors.length) { ?>
-            <span class="ancestors"><?js= doc.ancestors.join('') ?></span>
-        <?js } ?>
-        <?js= doc.name ?>
-        <?js if (doc.variation) { ?>
-            <sup class="variation"><?js= doc.variation ?></sup>
-        <?js } ?></h2>
-        <?js if (doc.classdesc) { ?>
-            <div class="class-description"><?js= doc.classdesc ?></div>
-        <?js } ?>
-    <?js } else if (doc.kind === 'module' && doc.modules) { ?>
-        <?js doc.modules.forEach(function(module) { ?>
-            <?js if (module.classdesc) { ?>
-                <div class="class-description"><?js= module.classdesc ?></div>
+    <div class="portlet-title">
+        <div class="caption">
+            <?js if (!doc.longname || doc.kind !== 'module') { ?>
+                <i class="fa fa-puzzle-piece fa-2x font-red-flamingo"></i>
+                <h2 class="caption-subject bold font-red-flamingo uppercase" style="display: inline-flex;">
+                    <?js if (doc.ancestors && doc.ancestors.length) { ?>
+                        <span class="ancestors"><?js= doc.ancestors.join('') ?></span>
+                    <?js } ?>
+                        <?js= doc.name ?>
+                    <?js if (doc.variation) { ?>
+                        <sup class="variation"><?js= doc.variation ?></sup>
+                    <?js } ?></h2>
+                    <?js if (doc.classdesc) { ?>
+                        <div class="class-description"><?js= doc.classdesc ?></div>
+                    <?js } ?>
+                </h2>
+            <?js } else if (doc.kind === 'module' && doc.modules) { ?>
+                <?js doc.modules.forEach(function(module) { ?>
+                    <?js if (module.classdesc) { ?>
+                        <div class="class-description"><?js= module.classdesc ?></div>
+                    <?js } ?>
+                <?js }) ?>
             <?js } ?>
-        <?js }) ?>
-    <?js } ?>
+        </div>
+    </div>
 </header>
 
 <article>

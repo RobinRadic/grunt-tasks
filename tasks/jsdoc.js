@@ -41,7 +41,7 @@ module.exports = function (grunt) {
         var ascmd = function(cmd){
             return function(next){
                 exec(cmd, function(err, stdin, stdout){
-                    console.log(err, stdin, stdout);
+                    //console.log(err, stdin, stdout);
                     next(err);
                 });
             }
@@ -51,6 +51,8 @@ module.exports = function (grunt) {
         function chdirReset(){
             process.chdir(cwd);
         }
+
+        var ok = grunt.log.ok;
 
         var dir = path.join(cwd, options.dir);
         var tmpReadmePath = path.join(dir, '..', '_TMPREADME.md');
@@ -62,6 +64,7 @@ module.exports = function (grunt) {
                 var jsdocConfig = fs.readJSONFileSync(options.configPath);
                 jsdocConfig.templates.frontMatter = frontMatter;
                 fs.outputJSONSync(tmpConfPath, jsdocConfig);
+                ok('loaded front matter, jsdoc config and created a temporary config file');
                 next(null);
             },
             function(next){
@@ -71,17 +74,21 @@ module.exports = function (grunt) {
 
                 fs.outputFileSync(tmpReadmePath, readme, 'utf-8');
 
+                ok('created readme');
+
                 next(null);
             },
             ascmd(options.jsdocBin + ' -t ' + options.themePath + ' -c ' + tmpConfPath),
             function(next){
+                ok('jsdoc generated');
                 fs.unlinkSync(tmpReadmePath);
                 fs.unlinkSync(tmpConfPath);
                 var indexfile = path.join(dir, "index.html");
                 if(fs.existsSync(indexfile)){
                     fs.unlinkSync(indexfile);
                 }
-                next();
+                ok('files removed');
+                next(null);
             },
             function(next){
                 chdirReset();
