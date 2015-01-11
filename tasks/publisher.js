@@ -36,7 +36,7 @@ module.exports = function (grunt) {
     var ascmd = function(cmd, desc){
         return function(next){
             exec(cmd, function(err, stdin, stdout){
-                //console.log(cmd, desc, err, stdin, stdout);
+                console.log(cmd, desc, err, stdin, stdout);
                 if(!err && typeof desc === 'string') grunt.log.ok(desc);
                 next(err);
             });

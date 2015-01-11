@@ -34,6 +34,7 @@
     "js-yaml": "3.2.5",
     "lodash": "2.4.1",
     "mocha": "2.1.0",
+      "jsdoc": "~3.3.0-alpha5",
     "semver": "^4.2.0"
   },
   "author": {

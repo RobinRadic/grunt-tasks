@@ -1,5 +1,11 @@
-grunt-radic
-=============
+# grunt-radic
+
+Contains:
+  
+- publisher
+- jsdoc theme
+- coverage theme
+- github pages automisation
 
 
 ## License

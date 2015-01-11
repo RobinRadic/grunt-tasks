@@ -35,7 +35,7 @@ module.exports = function (grunt) {
             themePath: path.join(__dirname, '..', 'lib/jsdoctheme'),
             configPath: 'jsdoc.json',
             frontMatterPath: 'docs/.front-matter.yml',
-            jsdocBin: './node_modules/jsdoc/jsdoc.js'
+            jsdocBin: path.join(__dirname, '..','node_modules/jsdoc/jsdoc.js')
         });
 
         var ascmd = function(cmd){
