@@ -25,24 +25,22 @@ module.exports = function (grunt) {
     // creation: http://gruntjs.com/creating-tasks
 
 
-    grunt.registerMultiTask('radic_jsdoc', 'Documentation generator using jsdoc3.', function () {
+    grunt.registerMultiTask('radic_jsdoc_tutorials', 'Tutorial generator using jsdoc3.', function () {
         var self = this;
         var taskDone = this.async();
 
         var options = this.options({
             dir: 'docs',
-            readmePath: 'README.md',
-            tutorials: false,
             tutorialsPath: path.join(process.cwd(), 'tutorials'),
             themePath: path.join(__dirname, '..', 'lib/jsdoctheme'),
             configPath: 'jsdoc.json',
             frontMatterPath: 'docs/.front-matter.yml',
-            jsdocBin: path.join(__dirname, '..', 'node_modules/jsdoc/jsdoc.js')
+            jsdocBin: path.join(__dirname, '..','node_modules/jsdoc/jsdoc.js')
         });
 
-        var ascmd = function (cmd) {
-            return function (next) {
-                exec(cmd, function (err, stdin, stdout) {
+        var ascmd = function(cmd){
+            return function(next){
+                exec(cmd, function(err, stdin, stdout){
                     //console.log(err, stdin, stdout);
                     next(err);
                 });
@@ -50,8 +48,7 @@ module.exports = function (grunt) {
         };
 
         var cwd = process.cwd();
-
-        function chdirReset() {
+        function chdirReset(){
             process.chdir(cwd);
         }
 
@@ -62,9 +59,12 @@ module.exports = function (grunt) {
         var tmpConfPath = path.join(dir, '..', '_jsdoc.conf.json');
         var jsdocCmd = options.jsdocBin + ' -t ' + options.themePath + ' -c ' + tmpConfPath;
 
+        if(options.tutorial = true){
+            jsdocCmd += ' --tutorials ' + options.tutorialsPath;
+        }
 
         async.waterfall([
-            function (next) {
+            function(next){
                 var frontMatter = yaml.safeLoad(fs.readFileSync(path.join(cwd, options.frontMatterPath), 'utf-8').replace(/---/g, ''));
                 var jsdocConfig = fs.readJSONFileSync(options.configPath);
                 jsdocConfig.templates.frontMatter = frontMatter;
@@ -72,10 +72,10 @@ module.exports = function (grunt) {
                 ok('loaded front matter, jsdoc config and created a temporary config file');
                 next(null);
             },
-            function (next) {
+            function(next){
                 var readme = fs.readFileSync(options.readmePath, 'utf-8');
-                //  .replace(/```(?=\w)(\w*)/g, '{% highlight $1 %}')
-                //  .replace(/```\n/g, '{% endhighlight %}\n');
+                  //  .replace(/```(?=\w)(\w*)/g, '{% highlight $1 %}')
+                  //  .replace(/```\n/g, '{% endhighlight %}\n');
 
                 fs.outputFileSync(tmpReadmePath, readme, 'utf-8');
 
@@ -84,39 +84,23 @@ module.exports = function (grunt) {
                 next(null);
             },
             ascmd(jsdocCmd),
-            function (next) {
+            function(next){
                 ok('jsdoc generated');
-                fs.unlinkSync(tmpReadmePath);
-                fs.unlinkSync(tmpConfPath);
+               // fs.unlinkSync(tmpReadmePath);
+              //  fs.unlinkSync(tmpConfPath);
                 var indexfile = path.join(dir, "index.html");
-                if (fs.existsSync(indexfile)) {
+                if(fs.existsSync(indexfile)){
                     fs.unlinkSync(indexfile);
                 }
                 ok('files removed');
                 next(null);
             },
-            function (next) {
-                if (options.tutorial === false) return next(null);
-                // jsdoc publish.js has now generated the processed.frontmatter.yml file. now we manually make the tutorials
-                // skipping the build-in tutorial generator to not get headaces with content parse
-                var frontMatter = fs.readFileSync(path.join(cwd, options.dir, 'processed-front-matter.yml'), 'utf-8');
-
-                require('fs').readdirSync(options.tutorialsPath).forEach(function (file) {
-                    var destFilePath = path.resolve(cwd, options.dir, 'tutorials', file);
-                    //fs.copySync(path.resolve(options.tutorialsPath, file), filePath);
-                    var mdFileContent = fs.readFileSync(path.resolve(options.tutorialsPath, file), 'utf-8');
-                    fs.writeFileSync(destFilePath, "---\n" + frontMatter + "\n---\n" + mdFileContent);
-
-                })
-
-                next(null);
-            },
-            function (next) {
+            function(next){
                 chdirReset();
                 next();
             }
-        ], function (err, result) {
-            if (err) throw new Error(err);
+        ], function(err, result){
+            if(err) throw new Error(err);
             taskDone();
             console.log('done');
         });
